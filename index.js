@@ -58,16 +58,9 @@ async function run(){
             res.send(userInformation);
         })
 
-         // Get All UserInformation
-         app.get('/user',verifyJWT, async(req,res)=>{
-            const query ={};
-            const cursor = userInformationCollection.find(query);
-            const userInformation =  await cursor.toArray();
-            res.send(userInformation);
-        })
 
         // Add  and Update  User Information
-        app.put('/userInformation/:email',verifyJWT, async (req, res) => {
+        app.put('/userInformation/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
             const filter = { email: email };
