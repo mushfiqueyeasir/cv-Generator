@@ -51,7 +51,7 @@ async function run(){
         })
 
         // Get All UserInformation
-        app.get('/',verifyJWT, async(req,res)=>{
+        app.get('/', async(req,res)=>{
             const query ={};
             const cursor = userInformationCollection.find(query);
             const userInformation =  await cursor.toArray();
