@@ -5,7 +5,7 @@ require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 9002
 
 
 app.use(cors());
@@ -44,14 +44,14 @@ async function run(){
 
         
         // Get specific User
-        app.get('/:email',  async (req, res) => {
+        app.get('/user/:email', verifyJWT, async (req, res) => {
             const email = req.params.email
             const users = await userInformationCollection.findOne({ email: email });
             res.send(users);
         })
 
         // Get All UserInformation
-        app.get('/', async(req,res)=>{
+        app.get('/',verifyJWT, async(req,res)=>{
             const query ={};
             const cursor = userInformationCollection.find(query);
             const userInformation =  await cursor.toArray();
@@ -60,7 +60,7 @@ async function run(){
 
 
         // Add  and Update  User Information
-        app.put('/:email', async (req, res) => {
+        app.put('/user/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
             const filter = { email: email };
@@ -80,6 +80,7 @@ async function run(){
 }
 
 run().catch(console.dir)
+
 
 
 
