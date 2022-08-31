@@ -44,14 +44,14 @@ async function run(){
 
         
         // Get specific User
-        app.get('/userInformation/:email',  async (req, res) => {
+        app.get('/:email',  async (req, res) => {
             const email = req.params.email
             const users = await userInformationCollection.findOne({ email: email });
             res.send(users);
         })
 
         // Get All UserInformation
-        app.get('/userInformation',verifyJWT, async(req,res)=>{
+        app.get('/',verifyJWT, async(req,res)=>{
             const query ={};
             const cursor = userInformationCollection.find(query);
             const userInformation =  await cursor.toArray();
@@ -60,7 +60,7 @@ async function run(){
 
 
         // Add  and Update  User Information
-        app.put('/userInformation/:email', async (req, res) => {
+        app.put('/:email', async (req, res) => {
             const email = req.params.email;
             const user = req.body;
             const filter = { email: email };
@@ -82,9 +82,6 @@ async function run(){
 run().catch(console.dir)
 
 
-app.get('/',  (req, res) => {
-  res.send('Stay Out Of  My  CV  Generator')
-})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
