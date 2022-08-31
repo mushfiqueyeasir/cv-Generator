@@ -44,7 +44,7 @@ async function run(){
 
         
         // Get specific User
-        app.get('/user/:email', verifyJWT, async (req, res) => {
+        app.get('/user/:email', async (req, res) => {
             const email = req.params.email
             const users = await userInformationCollection.findOne({ email: email });
             res.send(users);
